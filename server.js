@@ -5,18 +5,17 @@ const bodyParser = require('body-parser');
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
 
-app.locals.penguins = [{species: 'gentoo'}, {species: 'adelie'}];
+app.locals.wishes = [{title: 'To be a human.'}, {title: 'To eat ice cream.'}];
 
 app.use(bodyParser.json());
 
-app.get('/api/v1/penguins', (request, response) => {
-  response.status(200).json(app.locals.penguins);
+app.get('/api/v1/wishes', (request, response) => {
+  response.status(200).json(app.locals.wishes);
 });
 
-app.post('/api/v1/penguins', (request, response) => {
-  app.locals.penguins.push({ species: request.body.species });
-  console.log(app.locals.penguins);
-  response.status(201).json(app.locals.penguins);
+app.post('/api/v1/wishes', (request, response) => {
+  app.locals.wishes.push({ title: request.body.title });
+  response.status(201).json(app.locals.wishes[app.locals.wishes.length - 1]);
 });
 
 app.listen(app.get('port'), () => {
