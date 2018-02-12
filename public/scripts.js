@@ -1,38 +1,39 @@
 $('#wish-submit').on('click', () => {
   const inputText = $('#wish-input').val();
 
-  addItemtoDB(inputText);
+  addWishToDB(inputText);
 });
 
-const appendItem = (itemData) => {
-  $('#wish-container').append(`<p>Wish: ${itemData}</p>`);
+const appendWish = (wishData) => {
+  $('#wish-container').append(`<p class="wish">Wish: ${wishData}</p>`);
 };
 
-const addItemtoDB = (itemData) => {
+const addWishToDB = (wishData) => {
   fetch('api/v1/wishes', {
     method: 'POST',
-    body: JSON.stringify({ title: itemData }),
+    body: JSON.stringify({ title: wishData }),
     headers: new Headers({
       'Content-Type': 'application/json'
     })
   })
   .then(response => response.json())
   .then(parsedResponse => {
-    appendItem(parsedResponse.title);
+    appendWish(parsedResponse.title);
+    $('#wish-input').val('');
   })
   .catch(err => {
     console.error('Error submitting wish to DB:', err);
   });
 };
 
-const getItemsfromDB = (items) => {
+const getWishesFromDB = (wishes) => {
   fetch('api/v1/wishes', {
     method: 'GET'
   })
   .then(response => response.json())
-  .then(items => {
-    items.forEach((item) => {
-      appendItem(item.title);
+  .then(parsedResponse => {
+    parsedResponse.forEach((wish) => {
+      appendWish(wish.title);
     });
   })
   .catch(err => {
@@ -40,4 +41,4 @@ const getItemsfromDB = (items) => {
   });
 };
 
-getItemsfromDB();
+getWishesFromDB();
