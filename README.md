@@ -1,6 +1,6 @@
 # Script Injection Example
 
-This repo can demonstrate a benign cross-site-scripting attack through an HTML `input` element.
+This repo can demonstrate a benign script injection attack through an HTML `input` element.
 
 To keep this application as simple as possible, most error handling and edge-case handling has been intentionally left out.
 
